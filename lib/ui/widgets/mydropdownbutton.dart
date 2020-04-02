@@ -18,11 +18,11 @@ class _MyDropDownButtonState extends State<MyDropDownButton> {
       value: _active,
       style: Theme.of(context).textTheme.headline,
       items: [
-        DropdownMenuItem(child: Text("Designer Jobs"), value: 0),
-        DropdownMenuItem(child: Text("Designer Jobs"), value: 1),
-        DropdownMenuItem(child: Text("Designer Jobs"), value: 2),
-        DropdownMenuItem(child: Text("Designer Jobs"), value: 3),
-        DropdownMenuItem(child: Text("Designer Jobs"), value: 4),
+        DropdownMenuItem(child: Text("Project manager", style: TextStyle(fontSize: 11.0)), value: 0),
+        DropdownMenuItem(child: Text("Business analyst", style: TextStyle(fontSize: 11.0)), value: 1),
+        DropdownMenuItem(child: Text("Business manager", style: TextStyle(fontSize: 11.0)), value: 2),
+        DropdownMenuItem(child: Text("Information technology", style: TextStyle(fontSize: 11.0)), value: 3),
+        DropdownMenuItem(child: Text("Manufacturing", style: TextStyle(fontSize: 11.0)), value: 4),
       ],
     );
   }

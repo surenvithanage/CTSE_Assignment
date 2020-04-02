@@ -64,3 +64,15 @@ flutter:
           weight: 100
         - asset: fonts/OpenSans-Bold.ttf
           weight: 700
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/images/ic_imslogo.png
+    - assets/images/googlelogo.png
+    - assets/images/fblogo.jpg
+    - assets/images/twitterlogo.jpg
+    - assets/images/ulogo.png
+    - assets/images/ulogo.jpg
+    - assets/images/login.png
+    - assets/images/logo.png
+    - assets/images/powered_by.png

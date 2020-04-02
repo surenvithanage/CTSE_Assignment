@@ -37,7 +37,7 @@ class HomeScreen extends StatelessWidget{
                           onPressed: () {},
                         ),
                         CircleAvatar(
-                          backgroundImage: NetworkImage("https://cdn.pixabay.com/photo/2017/06/09/07/37/notebook-2386034_960_720.jpg"),
+                          backgroundImage: NetworkImage("https://avatars3.githubusercontent.com/u/30575233?s=460&u=41556de34699d54f689cdd5b20da31f860bd744e&v=4"),
                         )
                       ],
                     ),
