@@ -3,6 +3,7 @@ import 'package:flutter_job_portal/constants/constants.dart';
 import 'package:flutter_job_portal/ui/widgets/custom_shape.dart';
 import 'package:flutter_job_portal/ui/widgets/responsive_ui.dart';
 import 'package:flutter_job_portal/ui/widgets/textformfield.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -26,7 +27,19 @@ class _SignInScreenState extends State<SignInScreen> {
   bool _medium;
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> _key = GlobalKey();
+  // GlobalKey<FormState> _key = GlobalKey();
+  final _key = new GlobalKey<FormState>();
+  final _auth = FirebaseAuth.instance;
+
+  String _email;
+  String _password;
+  String _errorMessage;
+
+  @override
+  void initState() {
+    _errorMessage = '';
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -172,7 +185,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
   Widget passwordTextFormField() {
     return CustomTextField(
-      keyboardType: TextInputType.emailAddress,
+      keyboardType: TextInputType.text,
       textEditingController: passwordController,
       icon: Icons.lock,
       obscureText: true,
@@ -210,15 +223,44 @@ class _SignInScreenState extends State<SignInScreen> {
     );
   }
 
+  bool _validateAndSave() {
+    final form = _key.currentState;
+    if (form.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
+
+  void authenticate() async {
+    _email = emailController.text;
+    _password = passwordController.text;
+    setState(() {
+      _errorMessage = "";
+    });
+    if (_validateAndSave()) {
+      try {
+        final newuser = await _auth.createUserWithEmailAndPassword(
+            email: _email, password: _password);
+        if (newuser != null) {
+          Navigator.of(context).pushNamed(HOME);
+        }
+      } catch (e) {
+        setState(() {
+          _errorMessage = e.message;
+          Scaffold.of(context)
+              .showSnackBar(SnackBar(content: Text('$_errorMessage')));
+        });
+      }
+    }
+  }
+
   Widget button() {
     return RaisedButton(
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
       onPressed: () {
-        Navigator.of(context).pushNamed(HOME);
-        print("Routing to your account");
-        // Scaffold.of(context)
-            // .showSnackBar(SnackBar(content: Text('Login Successful')));
+        authenticate();
       },
       textColor: Colors.white,
       padding: EdgeInsets.all(0.0),

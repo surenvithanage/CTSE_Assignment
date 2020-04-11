@@ -31,6 +31,7 @@ class CustomTextField extends StatelessWidget {
       borderRadius: BorderRadius.circular(30.0),
       elevation: large? 12 : (medium? 10 : 8),
       child: TextFormField(
+        obscureText: this.obscureText,
         controller: textEditingController,
         keyboardType: keyboardType,
         cursorColor: Colors.orange[200],
@@ -41,6 +42,8 @@ class CustomTextField extends StatelessWidget {
               borderRadius: BorderRadius.circular(30.0),
               borderSide: BorderSide.none),
         ),
+        validator: (value) => value.isEmpty ? '$hint can\'t be empty': null,
+        onSaved: (value) => textEditingController.text = value.trim()
       ),
     );
   }
