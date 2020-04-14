@@ -42,14 +42,8 @@ class DetailsScreen extends StatelessWidget {
                       Icons.favorite,
                       color: Colors.white,
                     ),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: Icon(
-                      Icons.file_upload,
-                      color: Colors.white,
-                    ),
-                    onPressed: () {},
+                    onPressed: () {
+                    },
                   ),
                 ],
               ),
@@ -87,7 +81,7 @@ class DetailsScreen extends StatelessWidget {
                         height: 15.0,
                       ),
                       Text(
-                        "Overview",
+                        "Job Description",
                         style: Theme.of(context).textTheme.subhead,
                       ),
                       Text(
@@ -102,7 +96,7 @@ class DetailsScreen extends StatelessWidget {
                         height: 15.0,
                       ),
                       Text(
-                        "Photos",
+                        "Workspace",
                         style: Theme.of(context).textTheme.subhead,
                       ),
                       SizedBox(height: 5),
@@ -132,7 +126,7 @@ class DetailsScreen extends StatelessWidget {
                         height: 45,
                         child: RaisedButton(
                           child: Text(
-                            "Booking Inquiry",
+                            "Apply",
                             style: Theme.of(context)
                                 .textTheme
                                 .button

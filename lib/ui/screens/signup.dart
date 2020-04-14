@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_job_portal/constants/constants.dart';
+import 'package:flutter_job_portal/models/user.dart';
 import 'package:flutter_job_portal/ui/widgets/custom_shape.dart';
 import 'package:flutter_job_portal/ui/widgets/customappbar.dart';
 import 'package:flutter_job_portal/ui/widgets/responsive_ui.dart';
@@ -20,6 +22,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _medium;
   final _key = new GlobalKey<FormState>();
   final _auth = FirebaseAuth.instance;
+  String collectionName = "users";
+  User currentUser;
   String _errorMessage;
   String _firstname;
   String _lastname;
@@ -35,6 +39,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void initState() {
     _errorMessage = '';
+    _firstname = '';
+    _lastname = '';
+    _email = '';
+    _mobile = '';
+    _password = '';
     super.initState();
   }
 
@@ -230,7 +239,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-    bool _validateAndSave() {
+  bool _validateAndSave() {
     final form = _key.currentState;
     if (form.validate()) {
       form.save();
@@ -243,21 +252,46 @@ class _SignUpScreenState extends State<SignUpScreen> {
     setState(() {
       _errorMessage = "";
     });
-     _email = emailController.text;
+    _email = emailController.text;
     _password = passwordController.text;
-    if(_validateAndSave()) {
+    if (_validateAndSave()) {
       try {
-        final newuser = await _auth.createUserWithEmailAndPassword(email: _email, password: _password);
+        final newuser = await _auth.createUserWithEmailAndPassword(
+            email: _email, password: _password);
         if (newuser != null) {
+          insertUserDetails();
           Navigator.of(context).pushNamed(SIGN_IN);
         }
-      } catch(e) {
+      } catch (e) {
         setState(() {
           _errorMessage = e.message;
           Scaffold.of(context)
               .showSnackBar(SnackBar(content: Text('$_errorMessage')));
         });
       }
+    }
+  }
+
+  void insertUserDetails() {
+    User user = User(
+        firstname: firstnameController.text,
+        lastname: lastnameController.text,
+        email: emailController.text,
+        mobile: mobileController.text,
+        password: passwordController.text);
+    try {
+      Firestore.instance.runTransaction((Transaction transaction) async {
+        await Firestore.instance
+            .collection(collectionName)
+            .document()
+            .setData(user.toJson());
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage = e.message;
+        Scaffold.of(context)
+            .showSnackBar(SnackBar(content: Text('$_errorMessage')));
+      });
     }
   }
 

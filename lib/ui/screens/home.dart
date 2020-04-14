@@ -1,11 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_job_portal/global.dart';
 import 'package:flutter_job_portal/models/bottomsheet.dart';
 import 'package:flutter_job_portal/ui/screens/screens.dart';
 import 'package:flutter_job_portal/ui/widgets/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget{
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -37,7 +37,8 @@ class HomeScreen extends StatelessWidget{
                           onPressed: () {},
                         ),
                         CircleAvatar(
-                          backgroundImage: NetworkImage("https://avatars3.githubusercontent.com/u/30575233?s=460&u=41556de34699d54f689cdd5b20da31f860bd744e&v=4"),
+                          backgroundImage: NetworkImage(
+                              "https://avatars3.githubusercontent.com/u/30575233?s=460&u=41556de34699d54f689cdd5b20da31f860bd744e&v=4"),
                         )
                       ],
                     ),
@@ -82,25 +83,33 @@ class HomeScreen extends StatelessWidget{
                       height: 11,
                     ),
                     Expanded(
-                      child: ListView.builder(
-                        itemCount: jobList.length,
-                        itemBuilder: (ctx, i) {
-                          return JobContainer(
-                            description: jobList[i].description,
-                            iconUrl: jobList[i].iconUrl,
-                            location: jobList[i].location,
-                            salary: jobList[i].salary,
-                            title: jobList[i].title,
-                            onTap: () => Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (ctx) => DetailsScreen(id: i),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
+                        child: new StreamBuilder<QuerySnapshot>(
+                            stream: Firestore.instance
+                                .collection("jobs")
+                                .snapshots(),
+                            builder: (context, snapshot) {
+                              return new ListView.builder(
+                                  itemCount: snapshot.data.documents.length,
+                                  itemBuilder: (ctx, i) {
+                                    return JobContainer(
+                                      description: snapshot
+                                          .data.documents[i]['description'],
+                                      iconUrl:
+                                          snapshot.data.documents[i]['iconUrl'],
+                                      location:
+                                          snapshot.data.documents[i]['location'],
+                                      salary: snapshot.data.documents[i]['salary'],
+                                      title: snapshot.data.documents[i]['title'],
+                                      onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (ctx) =>
+                                              DetailsScreen(id: i),
+                                        ),
+                                      ),
+                                    );
+                                  });
+                            }))
                   ],
                 ),
               ),
@@ -112,7 +121,7 @@ class HomeScreen extends StatelessWidget{
               height: 60,
               child: MyBottomNavBar(),
             ),
-            Provider.of<MyBottomSheetModel>(context).visible 
+            Provider.of<MyBottomSheetModel>(context).visible
                 ? Positioned(
                     bottom: 0,
                     left: 0,

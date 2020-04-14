@@ -38,6 +38,8 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void initState() {
     _errorMessage = '';
+    _email = '';
+    _password = '';
     super.initState();
   }
 
@@ -240,7 +242,7 @@ class _SignInScreenState extends State<SignInScreen> {
     });
     if (_validateAndSave()) {
       try {
-        final newuser = await _auth.createUserWithEmailAndPassword(
+        final newuser = await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
         if (newuser != null) {
           Navigator.of(context).pushNamed(HOME);
