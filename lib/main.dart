@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_job_portal/ui/screens/profile.dart';
 import 'package:flutter_job_portal/ui/screens/signin.dart';
 import 'package:flutter_job_portal/ui/screens/signup.dart';
 import 'package:flutter_job_portal/ui/screens/splashscreen.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         SIGN_IN: (BuildContext context) => SignInPage(),
         SIGN_UP: (BuildContext context) => SignUpScreen(),
         HOME: (BuildContext context) => HomeScreen(),
+        PROFILE: (BuildContext context) => ProfileScreen(),
       },
       initialRoute: SPLASH_SCREEN,
       ),

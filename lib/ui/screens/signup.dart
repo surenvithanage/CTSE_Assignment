@@ -259,7 +259,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
         final newuser = await _auth.createUserWithEmailAndPassword(
             email: _email, password: _password);
         if (newuser != null) {
-          insertUserDetails();
+          final FirebaseUser user = await _auth.currentUser();
+          final uid = user.uid;
+          insertUserDetails(uid);
           Navigator.of(context).pushNamed(SIGN_IN);
         }
       } catch (e) {
@@ -272,8 +274,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
     }
   }
 
-  void insertUserDetails() {
+  void insertUserDetails(String userid) {
     User user = User(
+        uid: userid,
         firstname: firstnameController.text,
         lastname: lastnameController.text,
         email: emailController.text,

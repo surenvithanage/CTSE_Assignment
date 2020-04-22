@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_job_portal/constants/constants.dart';
 import 'package:flutter_job_portal/models/bottomsheet.dart';
 import 'package:flutter_job_portal/ui/screens/screens.dart';
 import 'package:flutter_job_portal/ui/widgets/widgets.dart';
@@ -36,10 +37,14 @@ class HomeScreen extends StatelessWidget {
                           ),
                           onPressed: () {},
                         ),
-                        CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              "https://avatars3.githubusercontent.com/u/30575233?s=460&u=41556de34699d54f689cdd5b20da31f860bd744e&v=4"),
-                        )
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.of(context).pushNamed(PROFILE);
+                            },
+                            child: CircleAvatar(
+                              backgroundImage: NetworkImage(
+                                  "https://avatars3.githubusercontent.com/u/30575233?s=460&u=41556de34699d54f689cdd5b20da31f860bd744e&v=4"),
+                            ))
                       ],
                     ),
                     SizedBox(
@@ -92,14 +97,16 @@ class HomeScreen extends StatelessWidget {
                                   itemCount: snapshot.data.documents.length,
                                   itemBuilder: (ctx, i) {
                                     return JobContainer(
-                                      description: snapshot
-                                          .data.documents[i]['description'],
-                                      iconUrl:
-                                          snapshot.data.documents[i]['iconUrl'],
-                                      location:
-                                          snapshot.data.documents[i]['location'],
-                                      salary: snapshot.data.documents[i]['salary'],
-                                      title: snapshot.data.documents[i]['title'],
+                                      description: snapshot.data.documents[i]
+                                          ['description'],
+                                      iconUrl: snapshot.data.documents[i]
+                                          ['iconUrl'],
+                                      location: snapshot.data.documents[i]
+                                          ['location'],
+                                      salary: snapshot.data.documents[i]
+                                          ['salary'],
+                                      title: snapshot.data.documents[i]
+                                          ['title'],
                                       onTap: () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
