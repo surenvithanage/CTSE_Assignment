@@ -5,7 +5,7 @@ class ProfileScreen extends StatelessWidget {
   final String _fullName = "Suren Vithanage";
   final String _status = "Software Developer";
   final String _bio =
-      "\"Hi, I am a Freelance developer working for hourly basis. If you wants to contact me to build your product leave a message.\"";
+      "\"Hi, I am a Software Engineer working at EPIC Technology Group. I'm also working as a freelancing developer based on an hourly rate.\"";
   final String _followers = "173";
   final String _posts = "24";
   final String _scores = "450";
@@ -15,7 +15,7 @@ class ProfileScreen extends StatelessWidget {
       height: screenSize.height / 2.6,
       decoration: BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage('https://lh3.googleusercontent.com/proxy/a1_aFhm_BrHSEupq0zs_BsOdb6d3m95w32znLv_x8rfwxH-PNxXiuo8SRraJtyzrtHu48G-J4-LHS7a4oRbegS0Ov6TtA2Tx4dVTU_hB_JwS2cXGk_80IX7UmSXWJUSgKhWevtRaJZYgtoAyxS38ec60F4qzlg'),
+          image: NetworkImage('https://www.itl.cat/pngfile/big/0-7755_nature-pier-bridge-d-river-water-sunset-night.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -137,7 +137,6 @@ class ProfileScreen extends StatelessWidget {
       child: Text(
         _bio,
         textAlign: TextAlign.center,
-        style: bioTextStyle,
       ),
     );
   }
