@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_job_portal/constants/constants.dart';
 import 'package:flutter_job_portal/global.dart';
+import 'package:flutter_job_portal/models/appliedJobModel.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DetailsScreen extends StatelessWidget {
   final int id;
@@ -133,7 +137,11 @@ class DetailsScreen extends StatelessWidget {
                                 .apply(color: Colors.white),
                           ),
                           color: Colors.blue,
-                          onPressed: () {},
+                          onPressed: () {
+                            ApplyForJob();
+                            Navigator.of(context).pushNamed(HOME);
+
+                          },
                         ),
                       )
                     ],
@@ -145,5 +153,30 @@ class DetailsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> ApplyForJob() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    AppliedJobModel appliedjob = new AppliedJobModel(
+      description: jobList[id].description,
+      iconUrl:  jobList[id].iconUrl,
+      location: jobList[id].location,
+      salary: jobList[id].salary,
+      title: jobList[id].title,
+      userId: prefs.getString("uId"),
+      id: this.id.toString(),
+      appliedDate: DateTime.now().day.toString() + "/" + DateTime.now().month.toString() + "/" + DateTime.now().year.toString()
+    );
+
+    try {
+      Firestore.instance.runTransaction((Transaction transaction) async {
+        await Firestore.instance
+            .collection("appliedJobs")
+            .document(id.toString())
+            .setData(appliedjob.toJson());
+      });
+    } catch (e) {
+     print("ERROR" + e.message);
+    }
   }
 }

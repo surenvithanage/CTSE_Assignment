@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_job_portal/constants/constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'mybottomnavitem.dart';
 import '../screens/jobList.dart';
 class MyBottomNavBar extends StatefulWidget {
+  final int pId;
   const MyBottomNavBar({
     Key key,
+    this.pId
   }) : super(key: key);
 
   @override
@@ -12,10 +15,11 @@ class MyBottomNavBar extends StatefulWidget {
 }
 
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
-  int _active = 0;
 
+  int _active = 0;
   @override
   Widget build(BuildContext context) {
+    _active = widget.pId;
     return Container(
       padding: EdgeInsets.all(5.0),
       height: double.infinity,
@@ -34,10 +38,12 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             text: "Search",
             icon: Icons.search,
             id: 0,
-            onPressed: () {
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setInt("btId", 0);
               Navigator.of(context).pushNamed(HOME);
               setState(() {
-                _active = 0;
+                _active = prefs.getInt("btId");
               });
             },
             active: _active,
@@ -47,8 +53,10 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             icon: Icons.map,
             id: 1,
             onPressed: () {
+
               setState(() {
                 _active = 1;
+
               });
             },
             active: _active,
@@ -68,16 +76,22 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             text: "Jobs",
             icon: Icons.work,
             id: 3,
-            onPressed: () {
+            onPressed: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              prefs.setInt("btId", 3);
               Navigator.of(context).pushNamed(JOB_LIST);
               setState(() {
-                _active = 3;
+                _active = prefs.getInt("btId");
               });
             },
-            active: _active,
+            active:_active,
           ),
         ],
       ),
     );
+  }
+   static Future<int> GetActive() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getInt("btId");
   }
 }

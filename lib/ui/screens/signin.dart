@@ -4,6 +4,7 @@ import 'package:flutter_job_portal/ui/widgets/custom_shape.dart';
 import 'package:flutter_job_portal/ui/widgets/responsive_ui.dart';
 import 'package:flutter_job_portal/ui/widgets/textformfield.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInPage extends StatelessWidget {
   @override
@@ -245,6 +246,9 @@ class _SignInScreenState extends State<SignInScreen> {
         final newuser = await _auth.signInWithEmailAndPassword(
             email: _email, password: _password);
         if (newuser != null) {
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.setString("uId", newuser.user.uid);
+          print("User" + prefs.getString("uId"));
           Navigator.of(context).pushNamed(HOME);
         }
       } catch (e) {

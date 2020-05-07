@@ -1,10 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_job_portal/constants/constants.dart';
 import 'package:flutter_job_portal/global.dart';
+import 'package:flutter_job_portal/models/appliedJobModel.dart';
 
 class AppliedJobsScreen extends StatelessWidget {
-  final int id;
+  final AppliedJobModel appliedJob;
 
-  const AppliedJobsScreen({Key key, @required this.id}) : super(key: key);
+  const AppliedJobsScreen({Key key, @required this.appliedJob})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -15,7 +20,7 @@ class AppliedJobsScreen extends StatelessWidget {
               top: 0,
               left: 0,
               right: 0,
-              height: MediaQuery.of(context).size.height/2,
+              height: MediaQuery.of(context).size.height / 2,
               child: Image.network(
                 "https://cdn.pixabay.com/photo/2014/02/28/13/47/job-search-276893_1280.jpg",
                 fit: BoxFit.cover,
@@ -42,8 +47,7 @@ class AppliedJobsScreen extends StatelessWidget {
                       Icons.favorite,
                       color: Colors.white,
                     ),
-                    onPressed: () {
-                    },
+                    onPressed: () {},
                   ),
                 ],
               ),
@@ -52,7 +56,7 @@ class AppliedJobsScreen extends StatelessWidget {
               left: 0,
               right: 0,
               bottom: 0,
-              height: MediaQuery.of(context).size.height /2,
+              height: MediaQuery.of(context).size.height / 2,
               child: Container(
                 padding: const EdgeInsets.all(15.0),
                 decoration: BoxDecoration(
@@ -66,12 +70,26 @@ class AppliedJobsScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(
-                        "${appliedJobList[id].title}",
-                        style: Theme.of(context).textTheme.headline,
+                      Row(children: <Widget>[
+                        Text(
+                          appliedJob.title,
+                          style: Theme.of(context).textTheme.headline,
+                        ),
+                        Spacer(),
+                        IconButton(
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
+                          ),
+                          onPressed: () {
+                            OnDelete();
+                            Navigator.of(context).pushNamed(JOB_LIST);
+                          },
+                        ),
+                      ],
                       ),
                       Text(
-                        "${appliedJobList[id].location}",
+                        appliedJob.location,
                         style: Theme.of(context)
                             .textTheme
                             .body2
@@ -85,7 +103,7 @@ class AppliedJobsScreen extends StatelessWidget {
                         style: Theme.of(context).textTheme.subhead,
                       ),
                       Text(
-                        "${appliedJobList[id].description}",
+                        appliedJob.description,
                         style: Theme.of(context)
                             .textTheme
                             .body2
@@ -95,34 +113,15 @@ class AppliedJobsScreen extends StatelessWidget {
                       SizedBox(
                         height: 15.0,
                       ),
-
                       SizedBox(height: 5),
-//                      Container(
-//                        height: 80,
-//                        child: ListView.builder(
-//                          scrollDirection: Axis.horizontal,
-//                          itemCount: jobList[id].photos.length,
-//                          itemBuilder: (ctx, i) {
-//                            return Padding(
-//                              padding:
-//                              const EdgeInsets.symmetric(horizontal: 9.0),
-//                              child: ClipRRect(
-//                                borderRadius: BorderRadius.circular(15.0),
-//                                child:
-//                                Image.network("${appliedJobList[id].photos[i]}"),
-//                              ),
-//                            );
-//                          },
-//                        ),
-//                      ),
                       SizedBox(
                         height: 15.0,
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.height * .7,
-                        height: 45,
-                        child: Text("Applied On : 05/06/2020",textDirection: TextDirection.ltr)
-                      )
+                          width: MediaQuery.of(context).size.height * .7,
+                          height: 45,
+                          child: Text("Applied On : " + appliedJob.appliedDate,
+                              textDirection: TextDirection.ltr))
                     ],
                   ),
                 ),
@@ -132,5 +131,10 @@ class AppliedJobsScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void OnDelete(){
+    Firestore.instance.collection("appliedJobs").document(appliedJob.id).delete();
+
   }
 }

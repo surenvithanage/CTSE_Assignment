@@ -126,7 +126,7 @@ class HomeScreen extends StatelessWidget {
               left: 0,
               right: 0,
               height: 60,
-              child: MyBottomNavBar(),
+              child: MyBottomNavBar(pId:0),
             ),
             Provider.of<MyBottomSheetModel>(context).visible
                 ? Positioned(

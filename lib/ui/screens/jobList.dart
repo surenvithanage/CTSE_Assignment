@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_job_portal/constants/constants.dart';
+import 'package:flutter_job_portal/models/appliedJobModel.dart';
 import 'package:flutter_job_portal/models/bottomsheet.dart';
 import 'package:flutter_job_portal/ui/screens/appliedjob.dart';
 import 'package:flutter_job_portal/ui/screens/screens.dart';
@@ -83,24 +84,29 @@ class JobListScreen extends StatelessWidget {
           Expanded(
               child: new StreamBuilder<QuerySnapshot>(
                   stream: Firestore.instance
-                      .collection("appliedjobs")
+                      .collection("appliedJobs")
                       .snapshots(),
                   builder: (context, snapshot) {
                     return new ListView.builder(
-                        itemCount: appliedJobList.length,
+                        itemCount:snapshot.data.documents.length,
                         itemBuilder: (ctx, i) {
                           return JobContainer(
-                            description: appliedJobList[i].description,
-                            iconUrl: appliedJobList[i].iconUrl,
-                            location: appliedJobList[i].location,
-                            salary: appliedJobList[i].salary,
-                            title: appliedJobList[i].title,
+                            description: snapshot.data.documents[i]
+                            ['description'],
+                            iconUrl: snapshot.data.documents[i]
+                            ['iconUrl'],
+                            location: snapshot.data.documents[i]
+                            ['location'],
+                            salary: snapshot.data.documents[i]
+                            ['salary'],
+                            title: snapshot.data.documents[i]
+                            ['title'],
                             onTap: () =>
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (ctx) =>
-                                        AppliedJobsScreen(id: i),
+                                        ApplyJobView(snapshot.data.documents[i]),
                                   ),
                                 ),
                           );
@@ -115,7 +121,7 @@ class JobListScreen extends StatelessWidget {
     left: 0,
     right: 0,
     height: 60,
-    child: MyBottomNavBar(),
+    child: MyBottomNavBar(pId: 3,),
     ),
     Provider.of<MyBottomSheetModel>(context).visible
     ? Positioned(
@@ -131,5 +137,19 @@ class JobListScreen extends StatelessWidget {
     ),
     );
   }
+AppliedJobsScreen ApplyJobView(DocumentSnapshot snapshot){
+    AppliedJobModel appliedJob = new AppliedJobModel(
+      id: snapshot["id"],
+      userId: snapshot["userId"],
+      title: snapshot["title"],
+      salary: snapshot["salary"],
+      location: snapshot["location"],
+      iconUrl: snapshot["iconUrl"],
+      description: snapshot["description"],
+      appliedDate: snapshot["appliedDate"]
 
+    );
+
+    return AppliedJobsScreen(appliedJob: appliedJob);
+}
 }
