@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_job_portal/constants/constants.dart';
 import 'mybottomnavitem.dart';
+import '../screens/jobList.dart';
 class MyBottomNavBar extends StatefulWidget {
   const MyBottomNavBar({
     Key key,
@@ -11,6 +13,7 @@ class MyBottomNavBar extends StatefulWidget {
 
 class _MyBottomNavBarState extends State<MyBottomNavBar> {
   int _active = 0;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,6 +35,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             icon: Icons.search,
             id: 0,
             onPressed: () {
+              Navigator.of(context).pushNamed(HOME);
               setState(() {
                 _active = 0;
               });
@@ -65,6 +69,7 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             icon: Icons.work,
             id: 3,
             onPressed: () {
+              Navigator.of(context).pushNamed(JOB_LIST);
               setState(() {
                 _active = 3;
               });

@@ -1,5 +1,38 @@
 import 'models/job.dart';
 
+List<JobModel> appliedJobList = [
+  JobModel(
+    description:
+    "AI Engineer is a new technical role at our company. You will be part of a team helping chart our AI strategy and define the problems we are solving with AI. You will help build our AI development and production infrastructure and set our technical standards. To succeed you must become an expert in building AI models and putting them into production.",
+    iconUrl:
+    "https://media.licdn.com/dms/image/C4D0BAQHiNSL4Or29cg/company-logo_200_200/0?e=1583366400&v=beta&t=aB2Qw4JLUnd5klrIZpHAhKXnlTKVLZnCyCIusQdhCaM",
+    location: "TeslaDev, Austin, TX",
+    title: "AI Developer",
+    salary: "\$120,000 - 160,000\$",
+    photos: [
+      "https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/07/31/11/31/laptop-2557468_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/07/31/11/46/laptop-2557586_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2015/05/28/14/38/ux-787980_960_720.jpg",
+    ],
+  ),
+  JobModel(
+    description:
+    "A web designer creates the look, layout, and features of a website. The job involves understanding both graphic design and computer programming. Once a website is created, a designer helps with maintenance and additions to the website. They work with development teams or managers for keeping the site up-to-date and prioritizing needs, among other tasks.",
+    iconUrl:
+    "https://media.licdn.com/dms/image/C4E0BAQF5t62bcL0e9g/company-logo_400_400/0?e=1583366400&v=beta&t=5kTgGtx08bY-C_a43KKvLg6ALcC318vBg1Q-dgPU1-I",
+    location: "Vision Solutions, San Francisco, CA",
+    title: "Web Designer",
+    salary: "\$30,000 - 60,000\$",
+    photos: [
+      "https://cdn.pixabay.com/photo/2015/04/20/13/17/work-731198_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/07/31/11/31/laptop-2557468_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2017/07/31/11/46/laptop-2557586_960_720.jpg",
+      "https://cdn.pixabay.com/photo/2015/05/28/14/38/ux-787980_960_720.jpg",
+    ],
+  ),
+];
+
 List<JobModel> jobList = [
   JobModel(
     description:
@@ -16,7 +49,7 @@ List<JobModel> jobList = [
       "https://cdn.pixabay.com/photo/2015/05/28/14/38/ux-787980_960_720.jpg",
     ],
   ),
-    JobModel(
+  JobModel(
     description:
         "Wiley is seeking a Force.com Developer with experience in developing functionality for enterprise solutions. Be part of an extraordinary opportunity to transform the higher education experience! As a developer for Wiley’s Student Relationship Platform on Force.com, you will participate in the definition of Salesforce development processes, drive technical design for new functionality, and develop new features to meet specifications. With Wiley’s proven expertise as a trusted partner in higher education, you will have the opportunity to innovate and create solutions that revolutionize the landscape of higher education technology and accelerate your career.",
     iconUrl:

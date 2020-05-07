@@ -6,3 +6,4 @@ final String SIGN_UP ='signup';
 final String SPLASH_SCREEN ='splashscreen';
 final String HOME = 'home';
 final String PROFILE = 'profile';
+final String JOB_LIST = 'jobList';
